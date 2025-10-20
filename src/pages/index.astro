@@ -1,0 +1,40 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Página principal">
+  <div class="grid place-content-center h-dvh w-full">
+    <div
+      class="bg-black text-white dark:bg-slate-900 dark:text-white p-4 rounded-xl flex flex-col gap-2"
+    >
+      <h1 class="font-bold text-3xl uppercase text-center inline-block">
+        Home Page
+      </h1>
+
+      <button
+        aria-label="Alternar tema"
+        id="toggle-theme"
+        type="button"
+        class="bg-white/20 hover:bg-white/10 dark:bg-slate-600/20 dark:hover:bg-slate-600/10 transition-colors cursor-pointer p-2 rounded-md"
+      >
+        Cambiar oscuro
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const root = document.documentElement;
+  const $toggleThemeBtn = document.getElementById(
+    "toggle-theme"
+  ) as HTMLButtonElement;
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") $toggleThemeBtn.textContent = "Cambiar claro";
+
+  $toggleThemeBtn?.addEventListener("click", () => {
+    const isDark = root.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    $toggleThemeBtn.textContent = isDark ? "Cambiar claro" : "Cambiar oscuro";
+  });
+</script>
