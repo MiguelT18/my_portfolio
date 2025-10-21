@@ -1,0 +1,18 @@
+<nav
+  class="bg-white/10 md:col-start-3 md:col-span-6 md:row-span-1 rounded-md p-2 overflow-y-auto"
+>
+  1
+</nav>
+
+<script>
+  const root = document.documentElement;
+  // Asignar el mismo ID a otro elemento
+  const $toggleThemeBtn = document.getElementById(
+    "toggle-theme"
+  ) as HTMLButtonElement;
+
+  $toggleThemeBtn?.addEventListener("click", () => {
+    const isDark = root.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+</script>
