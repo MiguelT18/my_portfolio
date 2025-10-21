@@ -1,0 +1,50 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="relative md:hidden">
+  <button
+    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+  >
+    <Icon
+      name="material-symbols:accessible-menu-sharp"
+      class="size-4 text-primary"
+    />
+  </button>
+</div>
+
+<ul class="flex items-center gap-2 max-md:hidden">
+  <li>
+    <a
+      title="Mi Github"
+      aria-label="Github"
+      href="https://github.com/MiguelT18"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+    >
+      <Icon name="line-md:github" class="size-4 text-primary" />
+    </a>
+  </li>
+  <li>
+    <a
+      title="Mi Linkedin"
+      aria-label="Linkedin"
+      href="https://www.linkedin.com/in/miguel-teran-116a0a2b9"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+    >
+      <Icon name="line-md:linkedin" class="size-4 text-primary" />
+    </a>
+  </li>
+  <li>
+    <button
+      title="Descargar curriculum"
+      aria-label="Descargar curriculum"
+      type="button"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+    >
+      <Icon name="line-md:download-loop" class="size-4 text-primary" />
+      <span class="block text-xs tracking-wider font-medium text-primary">
+        CV
+      </span>
+    </button>
+  </li>
+</ul>

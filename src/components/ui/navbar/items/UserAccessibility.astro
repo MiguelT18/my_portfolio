@@ -1,0 +1,112 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="relative md:hidden">
+  <button
+    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+  >
+    <Icon
+      name="material-symbols:app-registration-outline"
+      class="size-4 text-primary"
+    />
+  </button>
+</div>
+
+<ul class="flex items-center gap-2 max-md:hidden">
+  <li>
+    <button
+      id="toggle-theme"
+      title="Alternar tema"
+      aria-label="Alternar tema"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+      type="button"
+    >
+      <Icon
+        id="light-icon"
+        name="material-symbols:light-mode-rounded"
+        class="size-4 text-primary"
+      />
+      <Icon
+        id="dark-icon"
+        name="material-symbols:dark-mode-rounded"
+        class="hidden size-4 text-primary"
+      />
+    </button>
+  </li>
+  <li class="relative">
+    <button
+      id="language-btn"
+      title="Cambiar idioma"
+      aria-label="Cambiar idioma"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+      type="button"
+    >
+      <Icon
+        name="material-symbols:translate-rounded"
+        class="size-4 text-primary"
+      />
+    </button>
+
+    <ul
+      id="language-menu"
+      class="hidden absolute top-full dark:bg-black dark:text-white [&_li]:p-2 [&_li]:cursor-pointer [&_li]:text-sm"
+    >
+      <li>Español</li>
+      <li>Inglés</li>
+      <li>Portugés</li>
+    </ul>
+  </li>
+</ul>
+
+<script>
+  const root = document.documentElement;
+  // Elementos para alternar el tema
+  const $toggleThemeBtn = document.getElementById("toggle-theme");
+  const $lightThemeIcon = document.getElementById("light-icon");
+  const $darkThemeIcon = document.getElementById("dark-icon");
+  // Elementos para cambiar el idioma
+  const $languageMenu = document.getElementById("language-menu");
+  const $languageBtn = document.getElementById("language-btn");
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    $lightThemeIcon?.classList.add("hidden");
+    $darkThemeIcon?.classList.remove("hidden");
+  }
+
+  // Alternar el tema de la aplicación
+  $toggleThemeBtn?.addEventListener("click", () => {
+    const isDark = root.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    if (isDark) {
+      $lightThemeIcon?.classList.add("hidden");
+      $darkThemeIcon?.classList.remove("hidden");
+    } else {
+      $lightThemeIcon?.classList.remove("hidden");
+      $darkThemeIcon?.classList.add("hidden");
+    }
+  });
+
+  // Alternar menú de idiomas
+  $languageBtn?.addEventListener("click", () => {
+    $languageMenu?.classList.toggle("hidden");
+  });
+
+  // Cerrar menú al hacer click afuera
+  root.addEventListener("click", (e: any) => {
+    const isClickInsideMenu =
+      $languageMenu?.contains(e.target) || $languageBtn?.contains(e.target);
+
+    if (!isClickInsideMenu) $languageMenu?.classList.add("hidden");
+  });
+
+  // Cerrar menú al seleccionar un idioma
+  $languageMenu?.addEventListener("click", (e: any) => {
+    if (e.target.tagName === "LI") {
+      console.log(`Idioma seleccionado: ${e.target.textContent.trim()}`);
+      $languageMenu.classList.add("hidden");
+    }
+  });
+</script>

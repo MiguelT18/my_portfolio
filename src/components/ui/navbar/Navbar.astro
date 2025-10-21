@@ -1,0 +1,15 @@
+---
+import UserAccessibility from "./items/UserAccessibility.astro";
+import SearchInput from "./items/SearchInput.astro";
+import MyInfo from "./items/MyInfo.astro";
+---
+
+<nav
+  class="bg-black/5 dark:bg-white/5 md:col-start-4 lg:col-start-3 md:col-span-6 md:row-span-1 rounded-md p-2 flex items-center"
+>
+  <div class="w-full flex items-center justify-between">
+    <UserAccessibility />
+    <SearchInput />
+    <MyInfo />
+  </div>
+</nav>
