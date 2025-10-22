@@ -5,17 +5,14 @@ import { Icon } from "astro-icon/components";
 <style>
   .flip-card {
     perspective: 1000px; /* profundidad 3D */
-    position: relative;
   }
 
   .flip-card-inner {
-    position: relative;
     transform-style: preserve-3d;
   }
 
   .flip-card-front,
   .flip-card-back {
-    position: absolute;
     backface-visibility: hidden;
   }
 
@@ -52,7 +49,7 @@ import { Icon } from "astro-icon/components";
 </style>
 
 <article
-  class="bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-8 p-2 rounded-xl"
+  class="max-md:hidden bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-8 p-2 rounded-xl"
 >
   <div
     class="size-full flex items-center p-2 rounded-md active:bg-primary/10 hover:bg-primary/10 transition-all cursor-pointer"
@@ -69,36 +66,48 @@ import { Icon } from "astro-icon/components";
 </article>
 
 <aside
-  class="flip-card bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-1 md:row-span-7 rounded-xl p-2"
+  class="flip-card bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-1 md:row-span-7 rounded-xl p-2 flex flex-col justify-between"
 >
-  <button
-    id="flip-card-button"
-    title="Voltear contenido"
-    aria-label="Voltear contenido"
-    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors mb-2"
-    type="button"
-  >
-    <Icon name="material-symbols:flip" class="size-4 text-primary" />
-  </button>
+  <div>
+    <button
+      id="flip-card-button"
+      title="Voltear contenido"
+      aria-label="Voltear contenido"
+      class="max-md:hidden flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors mb-2"
+      type="button"
+    >
+      <Icon name="material-symbols:flip" class="size-4 text-primary" />
+    </button>
 
-  <div class="flip-card-inner">
-    <div class="flip-card-front bg-white/80 dark:bg-black/80 p-2 rounded-md">
-      <h1 class="text-lg font-bold uppercase">Menú Lateral</h1>
+    <div class="flip-card-inner md:relative">
+      <div
+        class="flip-card-front md:max-h-[420px] md:overflow-auto md:absolute md:bg-white/80 md:dark:bg-black/80 md:p-2 rounded-md"
+      >
+        <h1 class="text-lg font-bold uppercase">Información de contacto</h1>
 
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, ab
-        pariatur? Rem a nulla corporis praesentium aut voluptas velit, minima
-        sint impedit! Natus, sapiente assumenda commodi deserunt magni eveniet
-        quae!
-      </p>
-    </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet
+          accusamus, quos ex, fugit ipsa odio quidem, consequuntur debitis ea
+          dolor dolore impedit et tenetur expedita optio. Libero dolorem
+          corporis est.
+        </p>
+      </div>
 
-    <div class="flip-card-back bg-white/80 dark:bg-black/80 p-2 rounded-md">
-      <h1 class="text-lg font-bold uppercase">Información extra</h1>
+      <div
+        class="flip-card-back md:max-h-[420px] md:overflow-auto max-md:hidden md:absolute md:bg-white/80 md:dark:bg-black/80 md:p-2 rounded-md"
+      >
+        <h1 class="text-lg font-bold uppercase">Menú de navegación</h1>
 
-      <p>Este es un párrafo con información extra más corta</p>
+        <p>Este es un párrafo con información extra más corta</p>
+      </div>
     </div>
   </div>
+
+  <span
+    class="max-md:hidden block text-center text-xs text-[#808080] dark:text-[#9e9e9e]"
+  >
+    Hecho con <span>❤️</span> amor
+  </span>
 </aside>
 
 <script>
