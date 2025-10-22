@@ -7,6 +7,8 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
+  devToolbar: { enabled: false },
+
   vite: {
     plugins: [tailwindcss()],
   },
@@ -14,8 +16,11 @@ export default defineConfig({
   integrations: [
     icon({
       include: {
+        "circle-flags": ["lang-es-mx", "lang-en-us", "lang-pt-br"],
         "line-md": ["github", "linkedin", "download-loop"],
         "material-symbols": [
+          "flip",
+          "person",
           "translate-rounded",
           "light-mode-rounded",
           "dark-mode-rounded",

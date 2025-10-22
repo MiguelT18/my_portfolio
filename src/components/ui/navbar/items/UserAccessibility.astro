@@ -2,6 +2,46 @@
 import { Icon } from "astro-icon/components";
 ---
 
+<style>
+  @keyframes languageMenuIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes languageMenuOut {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+  }
+
+  #language-menu {
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  #language-menu.visible {
+    pointer-events: auto;
+    animation-name: languageMenuIn;
+  }
+
+  #language-menu.closing {
+    animation-name: languageMenuOut;
+  }
+</style>
+
 <div class="relative md:hidden">
   <button
     class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
@@ -36,7 +76,7 @@ import { Icon } from "astro-icon/components";
   </li>
   <li class="relative">
     <button
-      id="language-btn"
+      id="language-button-menu"
       title="Cambiar idioma"
       aria-label="Cambiar idioma"
       class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
@@ -50,11 +90,35 @@ import { Icon } from "astro-icon/components";
 
     <ul
       id="language-menu"
-      class="hidden absolute top-full dark:bg-black dark:text-white [&_li]:p-2 [&_li]:cursor-pointer [&_li]:text-sm"
+      class="absolute top-full backdrop-blur-xs bg-white/40 dark:bg-black/60 dark:text-white rounded-md [&_li_button]:size-full [&_li]:rounded-[inherit] [&_li_button]:rounded-[inherit] [&_li_button]:p-2 [&_li_button]:cursor-pointer [&_li_button]:text-sm [&_li_button]:flex [&_li_button]:items-center [&_li_button]:gap-2"
     >
-      <li>Español</li>
-      <li>Inglés</li>
-      <li>Portugés</li>
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
+        >
+          <Icon name="circle-flags:lang-es-mx" class="size-6" />
+          <span>Español</span>
+        </button>
+      </li>
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
+        >
+          <Icon name="circle-flags:lang-en-us" class="size-6" />
+          <span>Inglés</span>
+        </button>
+      </li>
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
+        >
+          <Icon name="circle-flags:lang-pt-br" class="size-6" />
+          <span>Portugués</span>
+        </button>
+      </li>
     </ul>
   </li>
 </ul>
@@ -67,7 +131,7 @@ import { Icon } from "astro-icon/components";
   const $darkThemeIcon = document.getElementById("dark-icon");
   // Elementos para cambiar el idioma
   const $languageMenu = document.getElementById("language-menu");
-  const $languageBtn = document.getElementById("language-btn");
+  const $languageBtn = document.getElementById("language-button-menu");
 
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
@@ -91,22 +155,71 @@ import { Icon } from "astro-icon/components";
 
   // Alternar menú de idiomas
   $languageBtn?.addEventListener("click", () => {
-    $languageMenu?.classList.toggle("hidden");
+    if (!$languageMenu) return;
+
+    const isOpen = $languageMenu.classList.contains("visible");
+
+    if (isOpen) {
+      closeLanguageMenu();
+    } else {
+      openLanguageMenu();
+    }
   });
 
   // Cerrar menú al hacer click afuera
-  root.addEventListener("click", (e: any) => {
-    const isClickInsideMenu =
-      $languageMenu?.contains(e.target) || $languageBtn?.contains(e.target);
+  root.addEventListener("click", (e) => {
+    if (!$languageMenu || !$languageBtn) return;
 
-    if (!isClickInsideMenu) $languageMenu?.classList.add("hidden");
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+
+    const isClickInside =
+      $languageMenu.contains(target) || $languageBtn.contains(target);
+
+    if (!isClickInside && $languageMenu.classList.contains("visible"))
+      closeLanguageMenu();
   });
 
+  function openLanguageMenu() {
+    if (!$languageMenu) return;
+
+    $languageMenu.classList.remove("closing");
+    $languageMenu.classList.add("visible");
+  }
+
+  function closeLanguageMenu() {
+    if (!$languageMenu) return;
+
+    // Si ya está cerrándose, evita re-disparar
+    if ($languageMenu.classList.contains("closing")) return;
+
+    $languageMenu.classList.remove("visible");
+    $languageMenu.classList.add("closing");
+
+    $languageMenu.addEventListener(
+      "animationend",
+      () => {
+        $languageMenu.classList.remove("closing");
+      },
+      { once: true }
+    );
+  }
+
   // Cerrar menú al seleccionar un idioma
-  $languageMenu?.addEventListener("click", (e: any) => {
-    if (e.target.tagName === "LI") {
-      console.log(`Idioma seleccionado: ${e.target.textContent.trim()}`);
-      $languageMenu.classList.add("hidden");
+  $languageMenu?.addEventListener("click", (e: MouseEvent) => {
+    const path = e.composedPath();
+    const button = path.find(
+      (el): el is HTMLButtonElement =>
+        el instanceof HTMLButtonElement && el.dataset.btn === "language-button"
+    );
+
+    if (!button) return;
+
+    const lang = button.querySelector("span")?.textContent?.trim();
+    if (lang) {
+      // Gestionar la lógica para cambiar el idioma
+      console.log(`Idioma seleccionado: ${lang}`);
+      closeLanguageMenu();
     }
   });
 </script>

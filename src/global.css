@@ -6,6 +6,10 @@
   --color-primary: #672ded;
 }
 
-* {
+html *,
+html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  scrollbar-color: #672ded #090909;
+  scrollbar-width: thin;
 }

@@ -1,5 +1,136 @@
-<aside
-  class="bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-1 md:row-span-8 rounded-md p-2"
+---
+import { Icon } from "astro-icon/components";
+---
+
+<style>
+  .flip-card {
+    perspective: 1000px; /* profundidad 3D */
+    position: relative;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+
+  @keyframes flipIn {
+    0% {
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(180deg);
+    }
+  }
+
+  @keyframes flipOut {
+    0% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+  }
+
+  /* Clases que disparan animación */
+  .flip-card-inner.flipping-forward {
+    animation: flipIn 0.3s forwards ease-in-out;
+  }
+
+  .flip-card-inner.flipping-back {
+    animation: flipOut 0.3s forwards ease-in-out;
+  }
+</style>
+
+<article
+  class="bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-8 p-2 rounded-xl"
 >
-  2
+  <div
+    class="size-full flex items-center p-2 rounded-md active:bg-primary/10 hover:bg-primary/10 transition-all cursor-pointer"
+  >
+    <div class="bg-white/25 size-fit rounded-full p-2">
+      <Icon name="material-symbols:person" class="size-5 opacity-50" />
+    </div>
+
+    <div class="flex flex-col ml-2">
+      <span class="text-sm font-medium">Miguel Terán</span>
+      <span class="text-xs opacity-50">miguel.teranj02@gmail.com</span>
+    </div>
+  </div>
+</article>
+
+<aside
+  class="flip-card bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-1 md:row-span-7 rounded-xl p-2"
+>
+  <button
+    id="flip-card-button"
+    title="Voltear contenido"
+    aria-label="Voltear contenido"
+    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors mb-2"
+    type="button"
+  >
+    <Icon name="material-symbols:flip" class="size-4 text-primary" />
+  </button>
+
+  <div class="flip-card-inner">
+    <div class="flip-card-front bg-white/80 dark:bg-black/80 p-2 rounded-md">
+      <h1 class="text-lg font-bold uppercase">Menú Lateral</h1>
+
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, ab
+        pariatur? Rem a nulla corporis praesentium aut voluptas velit, minima
+        sint impedit! Natus, sapiente assumenda commodi deserunt magni eveniet
+        quae!
+      </p>
+    </div>
+
+    <div class="flip-card-back bg-white/80 dark:bg-black/80 p-2 rounded-md">
+      <h1 class="text-lg font-bold uppercase">Información extra</h1>
+
+      <p>Este es un párrafo con información extra más corta</p>
+    </div>
+  </div>
 </aside>
+
+<script>
+  const $cardInner = document.querySelector(".flip-card-inner") as HTMLElement;
+  const $flipCardButton = document.getElementById(
+    "flip-card-button"
+  ) as HTMLButtonElement;
+
+  let flipped = false;
+
+  $flipCardButton?.addEventListener("click", () => {
+    if (!$cardInner) return;
+
+    $cardInner.style.pointerEvents = "none"; // evita clics mientras gira
+
+    if (!flipped) {
+      $cardInner.classList.remove("flipping-back");
+      $cardInner.classList.add("flipping-forward");
+    } else {
+      $cardInner.classList.remove("flipping-forward");
+      $cardInner.classList.add("flipping-back");
+    }
+
+    flipped = !flipped;
+
+    // Rehabilitar clics al terminar la animación
+    $cardInner.addEventListener(
+      "animationend",
+      () => {
+        $cardInner.style.pointerEvents = "auto";
+      },
+      { once: true }
+    );
+  });
+</script>
