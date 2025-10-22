@@ -52,15 +52,24 @@ import { Icon } from "astro-icon/components";
   class="max-md:hidden bg-black/5 dark:bg-white/5 md:col-span-3 lg:col-span-2 md:row-start-8 p-2 rounded-xl"
 >
   <div
-    class="size-full flex items-center p-2 rounded-md active:bg-primary/10 hover:bg-primary/10 transition-all cursor-pointer"
+    class="size-full flex items-center p-2 rounded-md active:bg-primary/10 hover:bg-primary/10 transition-colors cursor-pointer group"
   >
-    <div class="bg-white/25 size-fit rounded-full p-2">
-      <Icon name="material-symbols:person" class="size-5 opacity-50" />
+    <div
+      class="bg-black/25 dark:bg-white/25 group-hover:bg-primary/20 size-fit rounded-full p-2"
+    >
+      <Icon
+        name="material-symbols:person"
+        class="size-5 opacity-50 group-hover:opacity-25 group-hover:text-primary"
+      />
     </div>
 
     <div class="flex flex-col ml-2">
-      <span class="text-sm font-medium">Miguel Terán</span>
-      <span class="text-xs opacity-50">miguel.teranj02@gmail.com</span>
+      <span class="text-sm font-medium group-hover:text-primary"
+        >Miguel Terán</span
+      >
+      <span class="text-xs opacity-50 group-hover:text-primary"
+        >miguel.teranj02@gmail.com</span
+      >
     </div>
   </div>
 </article>
