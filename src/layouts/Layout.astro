@@ -5,6 +5,7 @@ import Main from "@/components/ui/main/Main.astro";
 import Navbar from "@/components/ui/navbar/Navbar.astro";
 import "@/global.css";
 import AccessibilityMenu from "@/components/ui/navbar/items/menus/AccessibilityMenu.astro";
+import NavbarMenu from "@/components/ui/navbar/items/menus/NavbarMenu.astro";
 
 interface Props {
   title?: string;
@@ -44,6 +45,7 @@ description ??= defaultDescription;
     </Main>
 
     <AccessibilityMenu />
+    <NavbarMenu />
   </body>
 </html>
 

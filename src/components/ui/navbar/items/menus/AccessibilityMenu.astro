@@ -58,7 +58,6 @@
   document.addEventListener("astro:page-load", () => {
     function openAccessibilityMenu() {
       if (!$accesibilityMenu) return;
-
       $accesibilityMenu?.classList.remove("closing");
       $accesibilityMenu?.classList.add("visible");
     }
@@ -76,6 +75,7 @@
       );
     }
 
+    const root = document.documentElement;
     const $accesibilityMenu = document.getElementById("accessibility-menu");
     const $closeAccessibilityMenuBtn = document.getElementById(
       "close-accessibility-button"
@@ -84,16 +84,26 @@
       "accessibility-open-menu-button"
     );
 
-    let isOpen = false;
-
     $openAccessibilityMenuBtn?.addEventListener("click", () => {
-      if (!isOpen) openAccessibilityMenu();
-      isOpen = true;
+      openAccessibilityMenu();
     });
 
     $closeAccessibilityMenuBtn?.addEventListener("click", () => {
-      if (isOpen) closeAccessibilityMenu();
-      isOpen = false;
+      closeAccessibilityMenu();
+    });
+
+    root.addEventListener("click", (e) => {
+      if (!$accesibilityMenu || !$openAccessibilityMenuBtn) return;
+
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+
+      const isClickInside =
+        $accesibilityMenu.contains(target) ||
+        $openAccessibilityMenuBtn.contains(target);
+
+      if (!isClickInside && $accesibilityMenu.classList.contains("visible"))
+        closeAccessibilityMenu();
     });
   });
 </script>

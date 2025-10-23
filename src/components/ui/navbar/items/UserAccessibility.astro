@@ -25,19 +25,19 @@ import { Icon } from "astro-icon/components";
     }
   }
 
-  #language-menu {
+  #access-menu {
     animation-duration: 0.2s;
     animation-fill-mode: forwards;
     pointer-events: none;
     opacity: 0;
   }
 
-  #language-menu.visible {
+  #access-menu.visible {
     pointer-events: auto;
     animation-name: languageMenuIn;
   }
 
-  #language-menu.closing {
+  #access-menu.closing {
     animation-name: languageMenuOut;
   }
 </style>
@@ -48,7 +48,7 @@ import { Icon } from "astro-icon/components";
     class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 active:bg-primary/20 transition-colors"
   >
     <Icon
-      name="material-symbols:app-registration-outline"
+      name="material-symbols:accessible-menu-sharp"
       class="size-4 text-primary"
     />
   </button>
@@ -90,7 +90,7 @@ import { Icon } from "astro-icon/components";
     </button>
 
     <ul
-      id="language-menu"
+      id="access-menu"
       class="absolute top-full backdrop-blur-xs bg-white/40 dark:bg-black/60 dark:text-white rounded-md [&_li_button]:size-full [&_li]:rounded-[inherit] [&_li_button]:rounded-[inherit] [&_li_button]:p-2 [&_li_button]:cursor-pointer [&_li_button]:text-sm [&_li_button]:flex [&_li_button]:items-center [&_li_button]:gap-2"
     >
       <li>
@@ -157,7 +157,7 @@ import { Icon } from "astro-icon/components";
     const $lightThemeIcon = document.getElementById("light-icon");
     const $darkThemeIcon = document.getElementById("dark-icon");
     // Elementos para cambiar el idioma
-    const $languageMenu = document.getElementById("language-menu");
+    const $languageMenu = document.getElementById("access-menu");
     const $languageBtn = document.getElementById("language-button-menu");
 
     const savedTheme = localStorage.getItem("theme");
@@ -165,13 +165,6 @@ import { Icon } from "astro-icon/components";
       $lightThemeIcon?.classList.add("hidden");
       $darkThemeIcon?.classList.remove("hidden");
     }
-    // Elementos de accesibilidad del usuario
-    const $accessibilityButton = document.getElementById(
-      "accessibility-menu-button"
-    );
-
-    // Abrir menú de accessibilidad
-    $accessibilityButton?.addEventListener("click", () => {});
 
     // Alternar el tema de la aplicación
     $toggleThemeBtn?.addEventListener("click", () => {
