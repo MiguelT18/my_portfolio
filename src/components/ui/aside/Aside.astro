@@ -21,19 +21,19 @@ import { Icon } from "astro-icon/components";
   }
 
   @keyframes flipIn {
-    0% {
+    from {
       transform: rotateY(0deg);
     }
-    100% {
+    to {
       transform: rotateY(180deg);
     }
   }
 
   @keyframes flipOut {
-    0% {
+    from {
       transform: rotateY(180deg);
     }
-    100% {
+    to {
       transform: rotateY(0deg);
     }
   }
@@ -120,35 +120,64 @@ import { Icon } from "astro-icon/components";
 </aside>
 
 <script>
-  const $cardInner = document.querySelector(".flip-card-inner") as HTMLElement;
-  const $flipCardButton = document.getElementById(
-    "flip-card-button"
-  ) as HTMLButtonElement;
+  document.addEventListener("astro:page-load", () => {
+    const $cardInner = document.querySelector(
+      ".flip-card-inner"
+    ) as HTMLElement;
+    const $flipCardButton = document.getElementById(
+      "flip-card-button"
+    ) as HTMLButtonElement;
 
-  let flipped = false;
+    if (!$cardInner || !$flipCardButton) return;
 
-  $flipCardButton?.addEventListener("click", () => {
-    if (!$cardInner) return;
+    let flipped = localStorage.getItem("was-flipped") === "true";
 
-    $cardInner.style.pointerEvents = "none"; // evita clics mientras gira
+    // Función que actualiza el estado visual y persistente
+    function setFlippedState(isFlipped: boolean, animate = false) {
+      flipped = isFlipped;
+      localStorage.setItem("was-flipped", String(isFlipped));
 
-    if (!flipped) {
-      $cardInner.classList.remove("flipping-back");
-      $cardInner.classList.add("flipping-forward");
-    } else {
-      $cardInner.classList.remove("flipping-forward");
-      $cardInner.classList.add("flipping-back");
+      // Limpiar todas las clases previas
+      $cardInner.classList.remove(
+        "flipping-back",
+        "flipping-forward",
+        "flip-card-front",
+        "flip-card-back"
+      );
+
+      // Si queremos animar (cuando hay clic)
+      if (animate) {
+        if (isFlipped) {
+          $cardInner.classList.add("flipping-forward");
+        } else {
+          $cardInner.classList.add("flipping-back");
+        }
+      }
+      // Si NO queremos animar (por ejemplo, al cargar la página)
+      else {
+        if (isFlipped) {
+          $cardInner.classList.add("flip-card-back");
+        } else {
+          $cardInner.classList.add("flip-card-front");
+        }
+      }
     }
 
-    flipped = !flipped;
+    // Aplicar el estado inicial sin animar
+    setFlippedState(flipped, false);
 
-    // Rehabilitar clics al terminar la animación
-    $cardInner.addEventListener(
-      "animationend",
-      () => {
-        $cardInner.style.pointerEvents = "auto";
-      },
-      { once: true }
-    );
+    // Evento de clic (animado)
+    $flipCardButton.addEventListener("click", () => {
+      $cardInner.style.pointerEvents = "none";
+      setFlippedState(!flipped, true); // aquí sí animamos
+
+      $cardInner.addEventListener(
+        "animationend",
+        () => {
+          $cardInner.style.pointerEvents = "auto";
+        },
+        { once: true }
+      );
+    });
   });
 </script>

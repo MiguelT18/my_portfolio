@@ -1,5 +1,10 @@
 ---
+import { ClientRouter } from "astro:transitions";
+import Aside from "@/components/ui/aside/Aside.astro";
+import Main from "@/components/ui/main/Main.astro";
+import Navbar from "@/components/ui/navbar/Navbar.astro";
 import "@/global.css";
+import AccessibilityMenu from "@/components/ui/navbar/items/menus/AccessibilityMenu.astro";
 
 interface Props {
   title?: string;
@@ -26,20 +31,32 @@ description ??= defaultDescription;
     <meta name="description" content={description} />
     <meta name="keywords" content="Miguel Terán" />
     <meta name="author" content="Miguel Terán" />
+
+    <ClientRouter />
   </head>
   <body
     class="md:h-dvh md:w-dvw dark:bg-black dark:text-white grid md:grid-cols-8 md:grid-rows-8 grid-cols-1 gap-2 p-2 max-w-[1280px] mx-auto"
   >
-    <slot />
+    <Navbar />
+    <Aside />
+    <Main>
+      <slot />
+    </Main>
+
+    <AccessibilityMenu />
   </body>
 </html>
 
 <script>
-  const root = document.documentElement;
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const savedTheme = localStorage.getItem("theme");
+  document.addEventListener("astro:page-load", () => {
+    const root = document.documentElement;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const savedTheme = localStorage.getItem("theme");
 
-  if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-    root.classList.add("dark");
-  }
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      root.classList.add("dark");
+    }
+  });
 </script>

@@ -1,12 +1,28 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Aside from "@/components/ui/aside/Aside.astro";
-import Navbar from "@/components/ui/navbar/Navbar.astro";
-import Main from "@/components/ui/main/Main.astro";
 ---
 
 <Layout title="Página principal">
-  <Navbar />
-  <Aside />
-  <Main />
+  <h1 class="text-xl md:text-3xl text-center font-bold uppercase">
+    Página principal
+  </h1>
+
+  <span class="inline-block text-md font-medium mb-1">Páginas disponibles:</span
+  >
+  <ul>
+    <li>
+      <a
+        href="/"
+        class="text-sm hover:text-primary hover:underline active:text-primary transition-all"
+        >Inicio</a
+      >
+    </li>
+    <li>
+      <a
+        href="/projects"
+        class="text-sm hover:text-primary hover:underline active:text-primary transition-all"
+        >Mis proyectos</a
+      >
+    </li>
+  </ul>
 </Layout>

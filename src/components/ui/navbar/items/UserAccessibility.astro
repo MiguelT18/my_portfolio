@@ -44,7 +44,8 @@ import { Icon } from "astro-icon/components";
 
 <div class="relative md:hidden">
   <button
-    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+    id="accessibility-open-menu-button"
+    class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 active:bg-primary/20 transition-colors"
   >
     <Icon
       name="material-symbols:app-registration-outline"
@@ -124,102 +125,112 @@ import { Icon } from "astro-icon/components";
 </ul>
 
 <script>
-  const root = document.documentElement;
-  // Elementos para alternar el tema
-  const $toggleThemeBtn = document.getElementById("toggle-theme");
-  const $lightThemeIcon = document.getElementById("light-icon");
-  const $darkThemeIcon = document.getElementById("dark-icon");
-  // Elementos para cambiar el idioma
-  const $languageMenu = document.getElementById("language-menu");
-  const $languageBtn = document.getElementById("language-button-menu");
+  document.addEventListener("astro:page-load", () => {
+    function openLanguageMenu() {
+      if (!$languageMenu) return;
 
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    $lightThemeIcon?.classList.add("hidden");
-    $darkThemeIcon?.classList.remove("hidden");
-  }
+      $languageMenu.classList.remove("closing");
+      $languageMenu.classList.add("visible");
+    }
 
-  // Alternar el tema de la aplicación
-  $toggleThemeBtn?.addEventListener("click", () => {
-    const isDark = root.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    function closeLanguageMenu() {
+      if (!$languageMenu) return;
 
-    if (isDark) {
+      // Si ya está cerrándose, evita re-disparar
+      if ($languageMenu.classList.contains("closing")) return;
+
+      $languageMenu.classList.remove("visible");
+      $languageMenu.classList.add("closing");
+
+      $languageMenu.addEventListener(
+        "animationend",
+        () => {
+          $languageMenu.classList.remove("closing");
+        },
+        { once: true }
+      );
+    }
+
+    const root = document.documentElement;
+    // Elementos para alternar el tema
+    const $toggleThemeBtn = document.getElementById("toggle-theme");
+    const $lightThemeIcon = document.getElementById("light-icon");
+    const $darkThemeIcon = document.getElementById("dark-icon");
+    // Elementos para cambiar el idioma
+    const $languageMenu = document.getElementById("language-menu");
+    const $languageBtn = document.getElementById("language-button-menu");
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
       $lightThemeIcon?.classList.add("hidden");
       $darkThemeIcon?.classList.remove("hidden");
-    } else {
-      $lightThemeIcon?.classList.remove("hidden");
-      $darkThemeIcon?.classList.add("hidden");
     }
-  });
-
-  // Alternar menú de idiomas
-  $languageBtn?.addEventListener("click", () => {
-    if (!$languageMenu) return;
-
-    const isOpen = $languageMenu.classList.contains("visible");
-
-    if (isOpen) {
-      closeLanguageMenu();
-    } else {
-      openLanguageMenu();
-    }
-  });
-
-  // Cerrar menú al hacer click afuera
-  root.addEventListener("click", (e) => {
-    if (!$languageMenu || !$languageBtn) return;
-
-    const target = e.target;
-    if (!(target instanceof Node)) return;
-
-    const isClickInside =
-      $languageMenu.contains(target) || $languageBtn.contains(target);
-
-    if (!isClickInside && $languageMenu.classList.contains("visible"))
-      closeLanguageMenu();
-  });
-
-  function openLanguageMenu() {
-    if (!$languageMenu) return;
-
-    $languageMenu.classList.remove("closing");
-    $languageMenu.classList.add("visible");
-  }
-
-  function closeLanguageMenu() {
-    if (!$languageMenu) return;
-
-    // Si ya está cerrándose, evita re-disparar
-    if ($languageMenu.classList.contains("closing")) return;
-
-    $languageMenu.classList.remove("visible");
-    $languageMenu.classList.add("closing");
-
-    $languageMenu.addEventListener(
-      "animationend",
-      () => {
-        $languageMenu.classList.remove("closing");
-      },
-      { once: true }
-    );
-  }
-
-  // Cerrar menú al seleccionar un idioma
-  $languageMenu?.addEventListener("click", (e: MouseEvent) => {
-    const path = e.composedPath();
-    const button = path.find(
-      (el): el is HTMLButtonElement =>
-        el instanceof HTMLButtonElement && el.dataset.btn === "language-button"
+    // Elementos de accesibilidad del usuario
+    const $accessibilityButton = document.getElementById(
+      "accessibility-menu-button"
     );
 
-    if (!button) return;
+    // Abrir menú de accessibilidad
+    $accessibilityButton?.addEventListener("click", () => {});
 
-    const lang = button.querySelector("span")?.textContent?.trim();
-    if (lang) {
-      // Gestionar la lógica para cambiar el idioma
-      console.log(`Idioma seleccionado: ${lang}`);
-      closeLanguageMenu();
-    }
+    // Alternar el tema de la aplicación
+    $toggleThemeBtn?.addEventListener("click", () => {
+      const isDark = root.classList.toggle("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+
+      if (isDark) {
+        $lightThemeIcon?.classList.add("hidden");
+        $darkThemeIcon?.classList.remove("hidden");
+      } else {
+        $lightThemeIcon?.classList.remove("hidden");
+        $darkThemeIcon?.classList.add("hidden");
+      }
+    });
+
+    // Alternar menú de idiomas
+    $languageBtn?.addEventListener("click", () => {
+      if (!$languageMenu) return;
+
+      const isOpen = $languageMenu.classList.contains("visible");
+
+      if (isOpen) {
+        closeLanguageMenu();
+      } else {
+        openLanguageMenu();
+      }
+    });
+
+    // Cerrar menú al hacer click afuera
+    root.addEventListener("click", (e) => {
+      if (!$languageMenu || !$languageBtn) return;
+
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+
+      const isClickInside =
+        $languageMenu.contains(target) || $languageBtn.contains(target);
+
+      if (!isClickInside && $languageMenu.classList.contains("visible"))
+        closeLanguageMenu();
+    });
+
+    // Cerrar menú al seleccionar un idioma
+    $languageMenu?.addEventListener("click", (e: MouseEvent) => {
+      const path = e.composedPath();
+      const button = path.find(
+        (el): el is HTMLButtonElement =>
+          el instanceof HTMLButtonElement &&
+          el.dataset.btn === "language-button"
+      );
+
+      if (!button) return;
+
+      const lang = button.querySelector("span")?.textContent?.trim();
+      if (lang) {
+        // Gestionar la lógica para cambiar el idioma
+        console.log(`Idioma seleccionado: ${lang}`);
+        closeLanguageMenu();
+      }
+    });
   });
 </script>
