@@ -55,6 +55,54 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <ul class="flex items-center gap-2 max-md:hidden">
+  <li class="relative">
+    <button
+      id="language-button-menu"
+      title="Cambiar idioma"
+      aria-label="Cambiar idioma"
+      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
+      type="button"
+    >
+      <Icon
+        name="material-symbols:translate-rounded"
+        class="size-4 text-primary"
+      />
+    </button>
+
+    <ul
+      id="access-menu"
+      class="absolute top-full mt-1 right-0 z-10 backdrop-blur-xs bg-white/80 dark:bg-black/80 dark:text-white rounded-md [&_li_button]:size-full [&_li]:rounded-[inherit] [&_li_button]:rounded-[inherit] [&_li_button]:p-2 [&_li_button]:cursor-pointer [&_li_button]:text-sm [&_li_button]:flex [&_li_button]:items-center [&_li_button]:gap-2 [&_li_button]:transition-all"
+    >
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary"
+        >
+          <Icon name="circle-flags:lang-es-mx" class="size-6" />
+          <span>Español</span>
+        </button>
+      </li>
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary"
+        >
+          <Icon name="circle-flags:lang-en-us" class="size-6" />
+          <span>Inglés</span>
+        </button>
+      </li>
+      <li>
+        <button
+          data-btn="language-button"
+          class="hover:bg-primary/20 hover:text-primary"
+        >
+          <Icon name="circle-flags:lang-pt-br" class="size-6" />
+          <span>Portugués</span>
+        </button>
+      </li>
+    </ul>
+  </li>
+
   <li>
     <button
       id="toggle-theme"
@@ -74,53 +122,6 @@ import { Icon } from "astro-icon/components";
         class="hidden size-4 text-primary"
       />
     </button>
-  </li>
-  <li class="relative">
-    <button
-      id="language-button-menu"
-      title="Cambiar idioma"
-      aria-label="Cambiar idioma"
-      class="flex justify-center items-center p-2 bg-primary/10 rounded-md cursor-pointer hover:bg-primary/20 transition-colors"
-      type="button"
-    >
-      <Icon
-        name="material-symbols:translate-rounded"
-        class="size-4 text-primary"
-      />
-    </button>
-
-    <ul
-      id="access-menu"
-      class="absolute top-full backdrop-blur-xs bg-white/40 dark:bg-black/60 dark:text-white rounded-md [&_li_button]:size-full [&_li]:rounded-[inherit] [&_li_button]:rounded-[inherit] [&_li_button]:p-2 [&_li_button]:cursor-pointer [&_li_button]:text-sm [&_li_button]:flex [&_li_button]:items-center [&_li_button]:gap-2"
-    >
-      <li>
-        <button
-          data-btn="language-button"
-          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
-        >
-          <Icon name="circle-flags:lang-es-mx" class="size-6" />
-          <span>Español</span>
-        </button>
-      </li>
-      <li>
-        <button
-          data-btn="language-button"
-          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
-        >
-          <Icon name="circle-flags:lang-en-us" class="size-6" />
-          <span>Inglés</span>
-        </button>
-      </li>
-      <li>
-        <button
-          data-btn="language-button"
-          class="hover:bg-primary/20 hover:text-primary hover:border hover:border-primary"
-        >
-          <Icon name="circle-flags:lang-pt-br" class="size-6" />
-          <span>Portugués</span>
-        </button>
-      </li>
-    </ul>
   </li>
 </ul>
 

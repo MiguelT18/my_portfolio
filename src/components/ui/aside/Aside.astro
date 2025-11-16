@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 ---
 
 <style>
@@ -89,19 +90,165 @@ import { Icon } from "astro-icon/components";
     </button>
 
     <div class="flip-card-inner md:relative">
+      <!-- INFORMACIÓN DE CONTACTO -->
       <div
-        class="flip-card-front md:max-h-[420px] md:overflow-auto md:absolute md:bg-white/80 md:dark:bg-black/80 md:p-2 rounded-md"
+        class="flip-card-front w-full md:max-h-[420px] md:overflow-auto md:absolute md:bg-white/80 md:dark:bg-black/80 md:px-2 md:py-4 rounded-md relative"
       >
-        <h1 class="text-lg font-bold uppercase">Información de contacto</h1>
+        <div class="flex items-center gap-2 w-fit">
+          <Image
+            src="/src/assets/images/character.png"
+            alt="Personaje simbólivo"
+            width={80}
+            height={80}
+            class="size-14 rounded-md bg-black/5 dark:bg-white/5"
+          />
+          <div class="flex flex-col">
+            <h1 class="text-md text-center font-bold uppercase">
+              Miguel Terán
+            </h1>
+            <div class="text-sm flex items-center gap-1">
+              <span class="block size-2 rounded-full bg-green-500"></span>
+              <span class="block text-sm opacity-80">Disponible</span>
+            </div>
+          </div>
+        </div>
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet
-          accusamus, quos ex, fugit ipsa odio quidem, consequuntur debitis ea
-          dolor dolore impedit et tenetur expedita optio. Libero dolorem
-          corporis est.
-        </p>
+        <Icon
+          name="material-symbols:share"
+          class="size-5 absolute top-2 right-2 md:top-4 md:right-4 hover:text-primary active:text-primary active:scale-90 transition-colors cursor-pointer"
+        />
+
+        <div class="flex items-center mt-2 gap-2">
+          <div
+            class="flex items-center gap-1 px-2 py-1 rounded-full bg-black/5 dark:bg-white/5"
+          >
+            <Icon
+              name="material-symbols:deployed-code"
+              class="size-4 text-blue-500"
+            />
+            <span class="text-xs">Programador</span>
+          </div>
+
+          <div
+            class="flex items-center gap-1 px-2 py-1 rounded-full bg-black/5 dark:bg-white/5"
+          >
+            <Icon
+              name="material-symbols:location-on"
+              class="size-4 text-red-500"
+            />
+            <span class="text-xs">Bolivia</span>
+          </div>
+        </div>
+
+        <div
+          class="w-full flex items-center gap-2 my-4 [&_button]:w-full [&_button]:py-2 [&_button]:text-sm [&_button]:font-medium [&_button]:tracking-wide [&_button]:rounded-md [&_button]:cursor-pointer"
+        >
+          <button
+            type="button"
+            class="bg-primary text-white hover:opacity-80 active:scale-95 transition-all"
+            >Me gusta</button
+          >
+          <button
+            type="button"
+            class="dark:bg-white dark:text-black bg-black text-white hover:opacity-80 active:scale-95 transition-all"
+          >
+            Comentar
+          </button>
+        </div>
+
+        <div class="flex items-center gap-4 mb-2">
+          <div class="space-y-1">
+            <span class="text-sm block opacity-80">Proyectos</span>
+            <div class="flex items-center gap-1">
+              <Icon
+                name="line-md:text-box-multiple-twotone"
+                class="size-4 text-yellow-500 dark:text-yellow-300"
+              />
+              <span class="text-sm font-medium">32</span>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <span class="text-sm block opacity-80">Comentarios</span>
+            <div class="flex items-center gap-1">
+              <Icon
+                name="line-md:chat-round-dots-filled"
+                class="size-4 text-black dark:text-white"
+              />
+              <span class="text-sm font-medium">123</span>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <span class="text-sm block opacity-80">Likes</span>
+            <div class="flex items-center gap-1">
+              <Icon name="line-md:heart-filled" class="size-4 text-red-400" />
+              <span class="text-sm font-medium">230</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-2">
+          <button
+            type="button"
+            class="w-full flex gap-2 border-black/5 dark:border-white/5 border-2 rounded-md cursor-pointer hover:border-primary/25 group transition-all"
+          >
+            <div
+              class="grid place-content-center w-fit px-2 border-r-2 border-black/5 dark:border-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:border-primary/25 group-hover:rounded-l-[inherit] transition-all"
+            >
+              <Icon
+                name="line-md:clipboard-arrow"
+                class="size-5 text-black/30 dark:text-white/30 group-hover:text-primary transition-all"
+              />
+            </div>
+
+            <div class="w-full flex flex-col items-start py-1">
+              <h2 class="block text-sm font-medium">Email</h2>
+              <span class="block text-sm">miguel.teranj02@gmail.com</span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            class="w-full flex gap-2 border-black/5 dark:border-white/5 border-2 rounded-md cursor-pointer hover:border-primary/25 group transition-all"
+          >
+            <div
+              class="grid place-content-center w-fit px-2 border-r-2 border-black/5 dark:border-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:border-primary/25 group-hover:rounded-l-[inherit] transition-all"
+            >
+              <Icon
+                name="line-md:clipboard-arrow"
+                class="size-5 text-black/30 dark:text-white/30 group-hover:text-primary transition-all"
+              />
+            </div>
+
+            <div class="w-full flex flex-col items-start py-1">
+              <h2 class="block text-sm font-medium">Teléfono</h2>
+              <span class="block text-sm">+591 67677457</span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            class="w-full flex gap-2 border-black/5 dark:border-white/5 border-2 rounded-md cursor-pointer hover:border-primary/25 group transition-all"
+          >
+            <div
+              class="grid place-content-center w-fit px-2 border-r-2 border-black/10 dark:border-white/10 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:border-primary/25 group-hover:rounded-l-[inherit] transition-all"
+            >
+              <Icon
+                name="line-md:clipboard-arrow"
+                class="size-5 text-black/30 dark:text-white/30 group-hover:text-primary transition-all"
+              />
+            </div>
+
+            <div class="w-full flex flex-col items-start py-1">
+              <h2 class="block text-sm font-medium">Edad</h2>
+              <span class="block text-sm">24 años</span>
+            </div>
+          </button>
+        </div>
       </div>
 
+      <!-- MENÚ DE NAVEGACIÓN -->
       <div
         class="flip-card-back md:max-h-[420px] md:overflow-auto max-md:hidden md:absolute md:bg-white/80 md:dark:bg-black/80 md:p-2 rounded-md"
       >

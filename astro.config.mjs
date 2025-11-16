@@ -17,8 +17,20 @@ export default defineConfig({
     icon({
       include: {
         "circle-flags": ["lang-es-mx", "lang-en-us", "lang-pt-br"],
-        "line-md": ["github", "linkedin", "download-loop"],
+        "line-md": [
+          "github",
+          "linkedin",
+          "download-loop",
+          "heart-filled",
+          "text-box-multiple-twotone",
+          "chat-round-dots-filled",
+          "clipboard-arrow",
+        ],
         "material-symbols": [
+          "share",
+          "computer-outline",
+          "deployed-code",
+          "location-on",
           "flip",
           "person",
           "translate-rounded",
